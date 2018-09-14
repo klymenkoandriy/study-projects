@@ -11,10 +11,18 @@ public class Node<E> {
     private Node<E> left;
     private Node<E> right;
 
+    /**
+     * Default constructor.
+     */
     public Node() {
-
     }
 
+    /**
+     * Constructor.
+     *
+     * @param key key
+     * @param value value
+     */
     public Node(int key, E value) {
         this.key = key;
         this.value = value;
@@ -54,6 +62,25 @@ public class Node<E> {
 
     @Override
     public String toString() {
-        return "Node { key:{ " + key + "}, value: {" + value + "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Node {key:");
+        sb.append(key);
+        sb.append(", value:");
+        sb.append(value);
+
+        sb.append(", left:{");
+        if (left != null) {
+            sb.append("key:");
+            sb.append(left.getKey());
+        }
+
+        sb.append("}, right:{");
+        if (right != null) {
+            sb.append("key:");
+            sb.append(right.getKey());
+        }
+        sb.append("}}");
+
+        return sb.toString();
     }
 }

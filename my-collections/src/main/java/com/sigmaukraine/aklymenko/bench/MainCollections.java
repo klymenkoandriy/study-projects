@@ -67,10 +67,7 @@ public class MainCollections {
         Node leftNode = node.getLeft();
         Node rightNode = node.getRight();
 
-        String leftKey = leftNode == null ? "" : String.valueOf(leftNode.getKey());
-        String rightKey = rightNode == null ? "" : String.valueOf(rightNode.getKey());
-
-        System.out.println("Node {key: " + node.getKey() + ", left: " + leftKey + ", right: " + rightKey + "}");
+        System.out.println(node);
         count.incrementAndGet();
 
         if (leftNode != null) {
