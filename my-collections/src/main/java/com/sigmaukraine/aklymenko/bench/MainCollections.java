@@ -1,5 +1,6 @@
 package com.sigmaukraine.aklymenko.bench;
 
+import com.sigmaukraine.aklymenko.bench.collections.list.TryList;
 import com.sigmaukraine.aklymenko.bench.collections.queue.MySimpleQueue;
 import com.sigmaukraine.aklymenko.bench.collections.tree.Node;
 import com.sigmaukraine.aklymenko.bench.collections.tree.Tree;
@@ -9,7 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Andriy Klymenko
  */
-public class MainCollections {
+public final class MainCollections {
+
+    private MainCollections() {
+    }
 
     /**
      * Main.
@@ -17,11 +21,15 @@ public class MainCollections {
      * @param args arguments
      */
     public static void main(String[] args) {
-        //tryMySimpleQueue();
+        tryMySimpleQueue();
         tryTree();
+        TryList.compareLists();
     }
 
      private static void tryMySimpleQueue() {
+
+         System.out.println(">>> test Queue");
+
          MySimpleQueue<Integer> queue = new MySimpleQueue<>();
 
          System.out.println("size:" + queue.size());
@@ -44,6 +52,8 @@ public class MainCollections {
     }
 
     private static void tryTree() {
+        System.out.println("\n>>> test Tree");
+
         Tree<Integer> theTree = new Tree<>();
 
         theTree.insert(50, 50);
