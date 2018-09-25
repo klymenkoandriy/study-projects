@@ -4,9 +4,13 @@ import com.sigmaukraine.aklymenko.bench.sort.ArraysSorter;
 import com.sigmaukraine.aklymenko.bench.sort.BubbleSorter;
 import com.sigmaukraine.aklymenko.bench.sort.CollectSorter;
 import com.sigmaukraine.aklymenko.bench.sort.InsertSorter;
+import com.sigmaukraine.aklymenko.bench.sort.MergeSorter;
 import com.sigmaukraine.aklymenko.bench.sort.QuickSorter;
 import com.sigmaukraine.aklymenko.bench.sort.SelectSorter;
 import com.sigmaukraine.aklymenko.bench.sort.Sorter;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Andriy Klymenko
@@ -14,6 +18,8 @@ import com.sigmaukraine.aklymenko.bench.sort.Sorter;
 public final class MainAlgorithms {
 
     private static final int MAX_NAME_LENGTH = 15;
+
+    private static Map<Long, String> testResults;
 
     private MainAlgorithms() {
     }
@@ -26,26 +32,34 @@ public final class MainAlgorithms {
     public static void main(String[] args) {
 
         int size = 10;
+        testSorting(size);
 
-        System.out.println(" -------- Sort " + size + " items. Time(ns):");
-
-        testSorting(new ArraysSorter(size));
-        testSorting(new BubbleSorter(size));
-        testSorting(new SelectSorter(size));
-        testSorting(new InsertSorter(size));
-        testSorting(new QuickSorter(size));
-        testSorting(new CollectSorter(size));
+        size *= 1000;
+        testSorting(size);
     }
 
-    private static void testSorting(Sorter sorter) {
+    private static void testSorting(int size) {
+        System.out.println(" -------- Sort " + size + " items. Time(ns):");
+        testResults = new TreeMap<>();
+
+        testSorter(new ArraysSorter(size));
+        testSorter(new BubbleSorter(size));
+        testSorter(new SelectSorter(size));
+        testSorter(new InsertSorter(size));
+        testSorter(new QuickSorter(size));
+        testSorter(new CollectSorter(size));
+        testSorter(new MergeSorter(size));
+
+        for (Map.Entry entry : testResults.entrySet()) {
+            System.out.print(entry.getValue() + ": ");
+            System.out.println(entry.getKey());
+        }
+    }
+
+    private static void testSorter(Sorter sorter) {
         sorter.fillRandom();
-//        System.out.println(Arrays.toString(sorter.getValues()));
-
         long time = sorter.sort();
-//        System.out.println(Arrays.toString(sorter.getValues()));
-
-        System.out.print(getName(sorter) + ": ");
-        System.out.println(time);
+        testResults.put(time, getName(sorter));
     }
 
     private static String getName(Sorter sorter) {

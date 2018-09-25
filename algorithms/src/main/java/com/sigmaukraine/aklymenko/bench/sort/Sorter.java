@@ -42,6 +42,19 @@ public abstract class Sorter {
     }
 
     /**
+     * Sets values.
+     *
+     * @param values input values
+     */
+    public void setValues(int[] values) {
+        if (values == null) {
+            throw new IllegalArgumentException("Argument mustn't be null.");
+        }
+        this.values = values;
+        size = values.length;
+    }
+
+    /**
      * Sorts array.
      *
      * @return time(ms)
