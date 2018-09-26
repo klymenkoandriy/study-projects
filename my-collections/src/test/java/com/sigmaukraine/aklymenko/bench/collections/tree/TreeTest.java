@@ -79,6 +79,20 @@ public class TreeTest {
         assertEquals(33, theTree.getRoot().getLeft().getRight().getLeft().getKey());
     }
 
+    @Test
+    public void should_return_sorted_keys() {
+        int[] keys = theTree.getSortedKeys();
+        assertEquals(theTree.getSize(), keys.length);
+        assertEquals(12, keys[0]);
+        assertEquals(25, keys[1]);
+        assertEquals(30, keys[2]);
+        assertEquals(33, keys[3]);
+        assertEquals(37, keys[4]);
+        assertEquals(43, keys[5]);
+        assertEquals(50, keys[6]);
+        assertEquals(75, keys[7]);
+    }
+
     private void fill() {
         theTree.insert(50, 50);
         theTree.insert(25, 25);

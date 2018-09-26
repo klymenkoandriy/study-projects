@@ -1,10 +1,10 @@
 package com.sigmaukraine.aklymenko.bench.collections.tree;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Andriy Klymenko
@@ -45,25 +45,25 @@ public final class TryTrees {
 
         theTree.delete(50);
 
-        AtomicInteger count = new AtomicInteger(0);
-        showIntKeyTree(theTree.getRoot(), count);
-        System.out.println("Count: " + count);
+        showIntKeyTree(theTree.getRoot());
+        System.out.println("Count: " + theTree.getSize());
+
+        System.out.println("Ordered keys: " + Arrays.toString(theTree.getSortedKeys()));
     }
 
-    private static void showIntKeyTree(Node node, AtomicInteger count) {
+    private static void showIntKeyTree(Node node) {
 
         Node leftNode = node.getLeft();
         Node rightNode = node.getRight();
 
         System.out.println(node);
-        count.incrementAndGet();
 
         if (leftNode != null) {
-            showIntKeyTree(leftNode, count);
+            showIntKeyTree(leftNode);
         }
 
         if (rightNode != null) {
-            showIntKeyTree(rightNode, count);
+            showIntKeyTree(rightNode);
         }
     }
 
@@ -86,25 +86,23 @@ public final class TryTrees {
 
         theTree.delete("g");
 
-        AtomicInteger count = new AtomicInteger(0);
-        showGenericKeyTree(theTree.getRoot(), count);
-        System.out.println("Count: " + count);
+        showGenericKeyTree(theTree.getRoot());
+        System.out.println("Count: " + theTree.getSize());
     }
 
-    private static void showGenericKeyTree(GenericKeyNode<String, Integer> node, AtomicInteger count) {
+    private static void showGenericKeyTree(GenericKeyNode<String, Integer> node) {
 
         GenericKeyNode<String, Integer> leftNode = node.getLeft();
         GenericKeyNode<String, Integer> rightNode = node.getRight();
 
         System.out.println(node);
-        count.incrementAndGet();
 
         if (leftNode != null) {
-            showGenericKeyTree(leftNode, count);
+            showGenericKeyTree(leftNode);
         }
 
         if (rightNode != null) {
-            showGenericKeyTree(rightNode, count);
+            showGenericKeyTree(rightNode);
         }
     }
 

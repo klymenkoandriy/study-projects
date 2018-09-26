@@ -11,7 +11,11 @@ package com.sigmaukraine.aklymenko.bench.collections.tree;
 public class GenericKeyTree<K extends Comparable<K>, E> {
 
     private GenericKeyNode<K, E> root;
+    private int size;
 
+    public int getSize() {
+        return size;
+    }
     /**
      * Returns value by key.
      *
@@ -40,6 +44,7 @@ public class GenericKeyTree<K extends Comparable<K>, E> {
      * @param value value
      */
     public void insert(K key, E value) {
+        size++;
         GenericKeyNode<K, E> newNode = new GenericKeyNode<>(key, value);
 
         if (root == null) {
@@ -101,6 +106,7 @@ public class GenericKeyTree<K extends Comparable<K>, E> {
             replaceIfTwoChildren(current, parent, isLeftChild);
         }
 
+        size--;
         return true;
     }
 
