@@ -5,15 +5,6 @@ package com.sigmaukraine.aklymenko.bench.sort;
  */
 public class QuickSorter extends Sorter {
 
-    /**
-     * Constructor.
-     *
-     * @param size size
-     */
-    public QuickSorter(int size) {
-        super(size);
-    }
-
     @Override
     public long sort() {
         long start = System.nanoTime();

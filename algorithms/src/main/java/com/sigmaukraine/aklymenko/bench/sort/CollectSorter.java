@@ -10,15 +10,6 @@ import java.util.stream.Collectors;
  */
 public class CollectSorter extends Sorter {
 
-    /**
-     * Constructor.
-     *
-     * @param size size
-     */
-    public CollectSorter(int size) {
-        super(size);
-    }
-
     @Override
     public long sort() {
 

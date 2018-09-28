@@ -5,15 +5,6 @@ package com.sigmaukraine.aklymenko.bench.sort;
  */
 public class SelectSorter extends Sorter {
 
-    /**
-     * Constructor.
-     *
-     * @param size size
-     */
-    public SelectSorter(int size) {
-        super(size);
-    }
-
     @Override
     public long sort() {
         int tmp = 0;

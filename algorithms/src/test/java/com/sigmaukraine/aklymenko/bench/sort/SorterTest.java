@@ -14,32 +14,42 @@ public class SorterTest {
 
     @Before
     public void init() {
-        values = new int[] {6, 2, 5, 3, 4};
+        values = new int[] {6, 2, 5, 2, 4};
     }
 
     @Test
     public void should_sort_correctly_bubble_sorting() {
-        testSorting(new BubbleSorter(values.length));
+        testSorting(new BubbleSorter());
     }
 
     @Test
     public void should_sort_correctly_insert_sorting() {
-        testSorting(new InsertSorter(values.length));
+        testSorting(new InsertSorter());
     }
 
     @Test
     public void should_sort_correctly_merge_sorting() {
-        testSorting(new MergeSorter(values.length));
+        testSorting(new MergeSorter());
     }
 
     @Test
     public void should_sort_correctly_quick_sorting() {
-        testSorting(new QuickSorter(values.length));
+        testSorting(new QuickSorter());
     }
 
     @Test
     public void should_sort_correctly_select_sorting() {
-        testSorting(new SelectSorter(values.length));
+        testSorting(new SelectSorter());
+    }
+
+    @Test
+    public void should_sort_correctly_shell() {
+        testSorting(new ShellSorter());
+    }
+
+    @Test
+    public void should_sort_correctly_shell_khnut() {
+        testSorting(new ShellSorterKhnut());
     }
 
     private void testSorting(Sorter sorter) {
@@ -47,7 +57,7 @@ public class SorterTest {
         sorter.sort();
 
         for (int i = 1; i < values.length; i++) {
-            assertTrue(values[i - 1] < values[i]);
+            assertTrue(values[i - 1] <= values[i]);
         }
     }
 }

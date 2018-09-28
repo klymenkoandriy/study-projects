@@ -5,15 +5,6 @@ package com.sigmaukraine.aklymenko.bench.sort;
  */
 public final class BubbleSorter extends Sorter {
 
-    /**
-     * Constructor.
-     *
-     * @param size size
-     */
-    public BubbleSorter(int size) {
-        super(size);
-    }
-
     @Override
     public long sort() {
         int tmp = 0;

@@ -7,19 +7,32 @@ import com.sigmaukraine.aklymenko.bench.sort.InsertSorter;
 import com.sigmaukraine.aklymenko.bench.sort.MergeSorter;
 import com.sigmaukraine.aklymenko.bench.sort.QuickSorter;
 import com.sigmaukraine.aklymenko.bench.sort.SelectSorter;
+import com.sigmaukraine.aklymenko.bench.sort.ShellSorter;
+import com.sigmaukraine.aklymenko.bench.sort.ShellSorterKhnut;
 import com.sigmaukraine.aklymenko.bench.sort.Sorter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.Random;
 
 /**
  * @author Andriy Klymenko
  */
 public final class MainAlgorithms {
 
-    private static final int MAX_NAME_LENGTH = 15;
+    private static final int MAX_NAME_LENGTH = 17;
+    private static final int SIZE = 10_000;
+    private static final int SHOTS = 5;
 
-    private static Map<Long, String> testResults;
+    private static Random random = new Random();
+
+    private static Map<String, List<Long>> testResults;
+
+    private static int[] testedArray;
 
     private MainAlgorithms() {
     }
@@ -30,36 +43,120 @@ public final class MainAlgorithms {
      * @param args arguments
      */
     public static void main(String[] args) {
+        System.out.print(" -------- Sort " + SIZE + " items (random data). Time(ns)  ");
+        fillRandom();
+        testSorting();
 
-        int size = 10;
-        testSorting(size);
+        System.out.print(" -------- Sort " + SIZE + " items (partly ordered data). Time(ns)  ");
+        fillPartlyOrdered();
+        testSorting();
 
-        size *= 1000;
-        testSorting(size);
+        System.out.print(" -------- Sort " + SIZE + " items (ordered data). Time(ns)  ");
+        fillOrdered();
+        testSorting();
     }
 
-    private static void testSorting(int size) {
-        System.out.println(" -------- Sort " + size + " items. Time(ns):");
-        testResults = new TreeMap<>();
+    private static void testSorting() {
 
-        testSorter(new ArraysSorter(size));
-        testSorter(new BubbleSorter(size));
-        testSorter(new SelectSorter(size));
-        testSorter(new InsertSorter(size));
-        testSorter(new QuickSorter(size));
-        testSorter(new CollectSorter(size));
-        testSorter(new MergeSorter(size));
+        testResults = new HashMap<>();
 
-        for (Map.Entry entry : testResults.entrySet()) {
-            System.out.print(entry.getValue() + ": ");
-            System.out.println(entry.getKey());
-        }
+        testSorter(new ArraysSorter());
+        testSorter(new BubbleSorter());
+        testSorter(new SelectSorter());
+        testSorter(new InsertSorter());
+        testSorter(new QuickSorter());
+        testSorter(new CollectSorter());
+        testSorter(new MergeSorter());
+        testSorter(new ShellSorter());
+        testSorter(new ShellSorterKhnut());
+
+        System.out.println();
+
+        Map<String, Long> avgResults = getAverageResults();
+        showResults(avgResults);
     }
 
     private static void testSorter(Sorter sorter) {
-        sorter.fillRandom();
-        long time = sorter.sort();
-        testResults.put(time, getName(sorter));
+        System.out.print("/");
+        String name = getName(sorter);
+
+        List<Long> classResults = testResults.get(name);
+        if (classResults == null) {
+            classResults = new ArrayList<>();
+            testResults.put(name, classResults);
+        }
+        for (int i = 0; i <= SHOTS; i++) {
+            System.out.print(".");
+
+            sorter.setValues(getFilledArray());
+
+            long time = sorter.checkedSort();
+            checkOrderedValues(sorter.getValues());
+
+            if (i > 0) {
+                classResults.add(time);
+            }
+        }
+
+        //System.out.println(Arrays.toString(sorter.getValues()));
+    }
+
+    private static int[] getFilledArray() {
+        return Arrays.copyOf(testedArray, testedArray.length);
+    }
+
+    private static void fillOrdered() {
+        testedArray = new int[SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            testedArray[i] = i;
+        }
+    }
+
+    private static void fillPartlyOrdered() {
+        testedArray = new int[SIZE];
+        for (int i = 0; i < SIZE / 2; i++) {
+            testedArray[i] = i;
+        }
+        for (int i = SIZE / 2; i < SIZE; i++) {
+            testedArray[i] = random.nextInt(SIZE);
+        }
+    }
+
+    private static void fillRandom() {
+        testedArray = new int[SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            testedArray[i] = random.nextInt(SIZE);
+        }
+    }
+
+    private static Map<String, Long> getAverageResults() {
+        Map<String, Long> avgResults = new HashMap<>();
+
+        testResults.forEach((k, results) -> {
+            long tmp = 0;
+            for (long res : results) {
+                tmp += res;
+            }
+            tmp /= results.size();
+            avgResults.put(k, tmp);
+        });
+
+        return avgResults;
+    }
+
+    private static void showResults(Map<String, Long> results) {
+        List<Map.Entry<String, Long>> res = new ArrayList<>(results.entrySet());
+        res.sort(new Comparator<Map.Entry<String, Long>>() {
+            @Override
+            public int compare(Map.Entry<String, Long> o1, Map.Entry<String, Long> o2) {
+                long diff = o1.getValue() - o2.getValue();
+                return diff < 0 ? -1 : (diff > 0 ? 1 : 0);
+            }
+        });
+
+        res.forEach(entry -> {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        });
     }
 
     private static String getName(Sorter sorter) {
@@ -68,4 +165,12 @@ public final class MainAlgorithms {
         String spaces = String.format("%0" + addLength + "d", 0).replace('0', ' ');
         return name + spaces;
     }
+
+    private static void checkOrderedValues(final int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            boolean b = arr[i - 1] > arr[i];
+            assert arr[i - 1] <= arr[i] : "Not ordered!";
+        }
+    }
+
 }
