@@ -2,6 +2,7 @@ package com.sigmaukraine.aklymenko.bench;
 
 import com.sigmaukraine.aklymenko.bench.sort.ArraysSorter;
 import com.sigmaukraine.aklymenko.bench.sort.BubbleSorter;
+import com.sigmaukraine.aklymenko.bench.sort.BucketSorter;
 import com.sigmaukraine.aklymenko.bench.sort.CocktailSorter;
 import com.sigmaukraine.aklymenko.bench.sort.CollectSorter;
 import com.sigmaukraine.aklymenko.bench.sort.InsertSorter;
@@ -73,6 +74,7 @@ public final class MainAlgorithms {
         testSorter(new ShellSorterKhnut());
         testSorter(new RadixSorter());
         testSorter(new CocktailSorter());
+        testSorter(new BucketSorter());
 
         System.out.println();
 
@@ -98,11 +100,9 @@ public final class MainAlgorithms {
             checkOrderedValues(sorter.getValues());
 
             if (i > 0) {
-                classResults.add(time);
+                testResults.get(name).add(time);
             }
         }
-
-        //System.out.println(Arrays.toString(sorter.getValues()));
     }
 
     private static int[] getFilledArray() {
@@ -129,7 +129,7 @@ public final class MainAlgorithms {
     private static void fillRandom() {
         testedArray = new int[SIZE];
         for (int i = 0; i < SIZE; i++) {
-            testedArray[i] = random.nextInt(SIZE);
+            testedArray[i] = random.nextInt(SIZE * 10);
         }
     }
 
@@ -158,9 +158,24 @@ public final class MainAlgorithms {
             }
         });
 
+        long maxVal = res.get(res.size() - 1).getValue();
+
         res.forEach(entry -> {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+            System.out.println(entry.getKey() + ": " + convertResult(entry.getValue(), maxVal));
         });
+    }
+
+    private static String convertResult(long value, long max) {
+        String stringMax = String.valueOf(max);
+        String stringVal = String.valueOf(value);
+
+        int diff = stringMax.length() - stringVal.length();
+
+        if (diff > 0) {
+            stringVal = String.format("%0" + diff + "d", 0).replace('0', ' ') + stringVal;
+        }
+
+        return stringVal;
     }
 
     private static String getName(Sorter sorter) {

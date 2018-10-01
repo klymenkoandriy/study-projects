@@ -62,6 +62,11 @@ public class SorterTest {
         testSorting(new CocktailSorter());
     }
 
+    @Test
+    public void should_sort_correctly_bucket_sorting() {
+        testSorting(new BucketSorter());
+    }
+
     private void testSorting(Sorter sorter) {
         sorter.setValues(values);
         sorter.sort();
