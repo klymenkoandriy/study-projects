@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 /**
  * @author Andriy Klymenko
  */
-public class CollectSorter extends Sorter {
+public class CollectSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long sort() {
+    public long performSort() {
 
         List<Integer> list = Arrays.stream(values).boxed().collect(Collectors.toList());
 

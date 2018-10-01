@@ -5,10 +5,10 @@ import java.util.Arrays;
 /**
  * @author Andriy Klymenko
  */
-public class ArraysSorter extends Sorter {
+public class ArraysSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long sort() {
+    public long performSort() {
         long start = System.nanoTime();
         Arrays.sort(values);
         return System.nanoTime() - start;

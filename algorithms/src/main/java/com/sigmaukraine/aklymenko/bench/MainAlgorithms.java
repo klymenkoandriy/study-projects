@@ -2,6 +2,7 @@ package com.sigmaukraine.aklymenko.bench;
 
 import com.sigmaukraine.aklymenko.bench.sort.ArraysSorter;
 import com.sigmaukraine.aklymenko.bench.sort.BubbleSorter;
+import com.sigmaukraine.aklymenko.bench.sort.CocktailSorter;
 import com.sigmaukraine.aklymenko.bench.sort.CollectSorter;
 import com.sigmaukraine.aklymenko.bench.sort.InsertSorter;
 import com.sigmaukraine.aklymenko.bench.sort.MergeSorter;
@@ -71,6 +72,7 @@ public final class MainAlgorithms {
         testSorter(new ShellSorter());
         testSorter(new ShellSorterKhnut());
         testSorter(new RadixSorter());
+        testSorter(new CocktailSorter());
 
         System.out.println();
 
@@ -92,7 +94,7 @@ public final class MainAlgorithms {
 
             sorter.setValues(getFilledArray());
 
-            long time = sorter.checkedSort();
+            long time = sorter.sort();
             checkOrderedValues(sorter.getValues());
 
             if (i > 0) {

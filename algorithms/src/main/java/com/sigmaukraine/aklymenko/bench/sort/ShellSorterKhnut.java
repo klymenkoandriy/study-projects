@@ -3,7 +3,7 @@ package com.sigmaukraine.aklymenko.bench.sort;
 /**
  * @author Andriy Klymenko
  */
-public class ShellSorterKhnut extends ShellSorter {
+public class ShellSorterKhnut extends ShellSorter implements Sorter {
 
     @Override
     protected void initStep() {

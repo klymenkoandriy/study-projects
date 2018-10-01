@@ -6,14 +6,14 @@ import java.util.List;
 /**
  * @author Andriy Klymenko
  */
-public class RadixSorter extends Sorter {
+public class RadixSorter extends AbstractSorter implements Sorter {
 
     private List<List<List<Byte>>> input = new ArrayList<>();
     private List<List<List<Byte>>> output = new ArrayList<>();
     private int maxSize;
 
     @Override
-    public long sort() {
+    public long performSort() {
         long start = System.nanoTime();
         //including first group
         convertInputValues();

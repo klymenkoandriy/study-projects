@@ -3,7 +3,7 @@ package com.sigmaukraine.aklymenko.bench.sort;
 /**
  * @author Andriy Klymenko
  */
-public class ShellSorter extends Sorter  {
+public class ShellSorter extends AbstractSorter implements Sorter {
 
     protected int step;
 
@@ -23,7 +23,7 @@ public class ShellSorter extends Sorter  {
     }
 
     @Override
-    public long sort() {
+    public long performSort() {
         long start = System.nanoTime();
 
         int i;

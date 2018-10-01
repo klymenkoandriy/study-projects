@@ -43,18 +43,23 @@ public class SorterTest {
     }
 
     @Test
-    public void should_sort_correctly_shell() {
+    public void should_sort_correctly_shell_sorting() {
         testSorting(new ShellSorter());
     }
 
     @Test
-    public void should_sort_correctly_shell_khnut() {
+    public void should_sort_correctly_shell_khnut_sorting() {
         testSorting(new ShellSorterKhnut());
     }
 
     @Test
-    public void should_sort_correctly_radix() {
+    public void should_sort_correctly_radix_sorting() {
         testSorting(new RadixSorter());
+    }
+
+    @Test
+    public void should_sort_correctly_cocktail_sorting() {
+        testSorting(new CocktailSorter());
     }
 
     private void testSorting(Sorter sorter) {

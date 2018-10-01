@@ -3,10 +3,10 @@ package com.sigmaukraine.aklymenko.bench.sort;
 /**
  * @author Andriy Klymenko
  */
-public class MergeSorter extends Sorter {
+public class MergeSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long sort() {
+    public long performSort() {
         long start = System.nanoTime();
         mergeSort(values, 0, size - 1);
         return System.nanoTime() - start;

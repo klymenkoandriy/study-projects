@@ -3,10 +3,10 @@ package com.sigmaukraine.aklymenko.bench.sort;
 /**
  * @author Andriy Klymenko
  */
-public final class BubbleSorter extends Sorter {
+public final class BubbleSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long sort() {
+    public long performSort() {
         int tmp = 0;
 
         long start = System.nanoTime();
