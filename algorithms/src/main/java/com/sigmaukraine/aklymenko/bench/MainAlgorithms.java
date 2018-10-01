@@ -6,6 +6,7 @@ import com.sigmaukraine.aklymenko.bench.sort.CollectSorter;
 import com.sigmaukraine.aklymenko.bench.sort.InsertSorter;
 import com.sigmaukraine.aklymenko.bench.sort.MergeSorter;
 import com.sigmaukraine.aklymenko.bench.sort.QuickSorter;
+import com.sigmaukraine.aklymenko.bench.sort.RadixSorter;
 import com.sigmaukraine.aklymenko.bench.sort.SelectSorter;
 import com.sigmaukraine.aklymenko.bench.sort.ShellSorter;
 import com.sigmaukraine.aklymenko.bench.sort.ShellSorterKhnut;
@@ -69,6 +70,7 @@ public final class MainAlgorithms {
         testSorter(new MergeSorter());
         testSorter(new ShellSorter());
         testSorter(new ShellSorterKhnut());
+        testSorter(new RadixSorter());
 
         System.out.println();
 

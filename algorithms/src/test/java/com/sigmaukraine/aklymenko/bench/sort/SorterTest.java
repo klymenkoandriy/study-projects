@@ -14,7 +14,7 @@ public class SorterTest {
 
     @Before
     public void init() {
-        values = new int[] {6, 2, 5, 2, 4};
+        values = new int[] {62, 21, 53, 2, 0, 4};
     }
 
     @Test
@@ -50,6 +50,11 @@ public class SorterTest {
     @Test
     public void should_sort_correctly_shell_khnut() {
         testSorting(new ShellSorterKhnut());
+    }
+
+    @Test
+    public void should_sort_correctly_radix() {
+        testSorting(new RadixSorter());
     }
 
     private void testSorting(Sorter sorter) {
