@@ -51,10 +51,10 @@ public final class TryTrees {
         System.out.println("Ordered keys: " + Arrays.toString(theTree.getSortedKeys()));
     }
 
-    private static void showIntKeyTree(Node node) {
+    private static void showIntKeyTree(Node<Integer> node) {
 
-        Node leftNode = node.getLeft();
-        Node rightNode = node.getRight();
+        Node<Integer> leftNode = node.getLeft();
+        Node<Integer> rightNode = node.getRight();
 
         System.out.println(node);
 

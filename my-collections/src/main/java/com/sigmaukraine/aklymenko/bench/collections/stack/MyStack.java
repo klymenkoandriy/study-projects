@@ -36,10 +36,12 @@ public class MyStack<E> {
         elements[++top] = value;
     }
 
+    @SuppressWarnings("unchecked")
     public E pop() {
         return isEmpty() ? null : (E) elements[top--];
     }
 
+    @SuppressWarnings("unchecked")
     public E peek() {
         return isEmpty() ? null : (E) elements[top];
     }

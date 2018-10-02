@@ -1,15 +1,9 @@
 package com.sigmaukraine.aklymenko.bench.sort;
 
-import java.util.Random;
-
 /**
  * @author Andriy Klymenko
  */
 public abstract class AbstractSorter implements Sorter {
-
-    private static final int INITIAL_SIZE = 8;
-
-    private static Random random = new Random();
 
     protected int[] values;
     protected int size;

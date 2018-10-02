@@ -69,7 +69,5 @@ public class BucketSorter extends AbstractSorter implements Sorter {
         }
 
         buckets.add(new ArrayList<>());
-
-        int a = 0;
     }
 }

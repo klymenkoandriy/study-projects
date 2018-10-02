@@ -57,6 +57,8 @@ public final class MainAlgorithms {
         System.out.print(" -------- Sort " + SIZE + " items (ordered data). Time(ns)  ");
         fillOrdered();
         testSorting();
+        
+        System.out.println("------- finish -------");
     }
 
     private static void testSorting() {
@@ -187,7 +189,6 @@ public final class MainAlgorithms {
 
     private static void checkOrderedValues(final int[] arr) {
         for (int i = 1; i < arr.length; i++) {
-            boolean b = arr[i - 1] > arr[i];
             assert arr[i - 1] <= arr[i] : "Not ordered!";
         }
     }

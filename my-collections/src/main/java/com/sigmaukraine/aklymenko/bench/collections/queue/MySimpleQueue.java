@@ -146,6 +146,7 @@ public class MySimpleQueue<E> {
      *
      * @return value
      */
+    @SuppressWarnings("unchecked")
     public E peek() {
         if (isEmpty()) {
             return null;

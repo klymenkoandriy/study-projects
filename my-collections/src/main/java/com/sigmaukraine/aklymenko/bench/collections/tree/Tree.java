@@ -20,8 +20,8 @@ public class Tree<E> {
      * @param key key
      * @return node
      */
-    public Node find(int key) {
-        Node current = root;
+    public Node<E> find(int key) {
+        Node<E> current = root;
          while (current.getKey() != key) {
                 if (key < current.getKey()) {
                     current = current.getLeft();

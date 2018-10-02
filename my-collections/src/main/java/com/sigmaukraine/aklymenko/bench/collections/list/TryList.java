@@ -98,7 +98,7 @@ public final class TryList {
         return  System.nanoTime() - start;
     }
 
-    private static long testListRemove(List testList) {
+    private static long testListRemove(List<Integer> testList) {
         int size = testList.size();
         long start = System.nanoTime();
         for (int i = 1; i < size; i++) {
@@ -107,7 +107,7 @@ public final class TryList {
         return  System.nanoTime() - start;
     }
 
-    private static long testListGet(List testList) {
+    private static long testListGet(List<Integer> testList) {
         long start = System.nanoTime();
         for (int i = 0; i < testList.size(); i++) {
             testList.get(i);
