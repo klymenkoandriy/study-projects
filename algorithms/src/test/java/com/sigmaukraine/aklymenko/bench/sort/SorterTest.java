@@ -67,6 +67,11 @@ public class SorterTest {
         testSorting(new BucketSorter());
     }
 
+    @Test
+    public void should_sort_correctly_heap_sorting() {
+        testSorting(new HeapSorter());
+    }
+
     private void testSorting(Sorter sorter) {
         sorter.setValues(values);
         sorter.sort();

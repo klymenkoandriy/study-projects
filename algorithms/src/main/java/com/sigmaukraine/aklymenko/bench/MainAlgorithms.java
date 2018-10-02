@@ -5,6 +5,7 @@ import com.sigmaukraine.aklymenko.bench.sort.BubbleSorter;
 import com.sigmaukraine.aklymenko.bench.sort.BucketSorter;
 import com.sigmaukraine.aklymenko.bench.sort.CocktailSorter;
 import com.sigmaukraine.aklymenko.bench.sort.CollectSorter;
+import com.sigmaukraine.aklymenko.bench.sort.HeapSorter;
 import com.sigmaukraine.aklymenko.bench.sort.InsertSorter;
 import com.sigmaukraine.aklymenko.bench.sort.MergeSorter;
 import com.sigmaukraine.aklymenko.bench.sort.QuickSorter;
@@ -57,7 +58,7 @@ public final class MainAlgorithms {
         System.out.print(" -------- Sort " + SIZE + " items (ordered data). Time(ns)  ");
         fillOrdered();
         testSorting();
-        
+
         System.out.println("------- finish -------");
     }
 
@@ -77,6 +78,7 @@ public final class MainAlgorithms {
         testSorter(new RadixSorter());
         testSorter(new CocktailSorter());
         testSorter(new BucketSorter());
+        testSorter(new HeapSorter());
 
         System.out.println();
 
