@@ -1,6 +1,7 @@
 package com.sigmaukraine.aklymenko.bench;
 
 import com.sigmaukraine.aklymenko.bench.search.BinarySearcher;
+import com.sigmaukraine.aklymenko.bench.search.HashMapSearcher;
 import com.sigmaukraine.aklymenko.bench.search.IndexSearcher;
 import com.sigmaukraine.aklymenko.bench.search.Item;
 import com.sigmaukraine.aklymenko.bench.search.LinearSearcher;
@@ -69,7 +70,7 @@ public final class MainAlgorithms {
 
         System.out.println("------- finish sorting-------------------------------------\n");
 
-        System.out.print(" -------- Search Time(ns)  ");
+        System.out.print("-------- Search Time(ns)  ");
         testedItems = AlgorithmsUtil.getRandomItems(SEARCH_SIZE);
         testSearch();
 
@@ -129,7 +130,8 @@ public final class MainAlgorithms {
         testSearcher(new LinearSearcher());
         testSearcher(new BinarySearcher());
         testSearcher(new IndexSearcher());
-
+        testSearcher(new HashMapSearcher());
+        
         System.out.println();
 
         Map<String, Long> avgResults = AlgorithmsUtil.getAverageResults(testResults);
