@@ -1,5 +1,10 @@
 package com.sigmaukraine.aklymenko.bench;
 
+import com.sigmaukraine.aklymenko.bench.search.BinarySearcher;
+import com.sigmaukraine.aklymenko.bench.search.IndexSearcher;
+import com.sigmaukraine.aklymenko.bench.search.Item;
+import com.sigmaukraine.aklymenko.bench.search.LinearSearcher;
+import com.sigmaukraine.aklymenko.bench.search.Searcher;
 import com.sigmaukraine.aklymenko.bench.sort.ArraysSorter;
 import com.sigmaukraine.aklymenko.bench.sort.BubbleSorter;
 import com.sigmaukraine.aklymenko.bench.sort.BucketSorter;
@@ -14,10 +19,10 @@ import com.sigmaukraine.aklymenko.bench.sort.SelectSorter;
 import com.sigmaukraine.aklymenko.bench.sort.ShellSorter;
 import com.sigmaukraine.aklymenko.bench.sort.ShellSorterKhnut;
 import com.sigmaukraine.aklymenko.bench.sort.Sorter;
+import com.sigmaukraine.aklymenko.bench.util.AlgorithmsUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,14 +34,17 @@ import java.util.Random;
 public final class MainAlgorithms {
 
     private static final int MAX_NAME_LENGTH = 17;
-    private static final int SIZE = 10_000;
-    private static final int SHOTS = 5;
+    private static final int SORT_SIZE = 10_000;
+    private static final int SORT_SHOTS = 5;
+    private static final int SEARCH_SIZE = 100_000;
+    private static final int SEARCH_SHOTS = 20;
 
     private static Random random = new Random();
 
     private static Map<String, List<Long>> testResults;
 
     private static int[] testedArray;
+    private static Item[] testedItems;
 
     private MainAlgorithms() {
     }
@@ -47,19 +55,25 @@ public final class MainAlgorithms {
      * @param args arguments
      */
     public static void main(String[] args) {
-        System.out.print(" -------- Sort " + SIZE + " items (random data). Time(ns)  ");
-        fillRandom();
+        System.out.print(" -------- Sort " + SORT_SIZE + " items (random data). Time(ns)  ");
+        testedArray = AlgorithmsUtil.getRandom(SORT_SIZE);
         testSorting();
 
-        System.out.print(" -------- Sort " + SIZE + " items (partly ordered data). Time(ns)  ");
-        fillPartlyOrdered();
+        System.out.print(" -------- Sort " + SORT_SIZE + " items (partly ordered data). Time(ns)  ");
+        testedArray = AlgorithmsUtil.getPartlyOrdered(SORT_SIZE);
         testSorting();
 
-        System.out.print(" -------- Sort " + SIZE + " items (ordered data). Time(ns)  ");
-        fillOrdered();
+        System.out.print(" -------- Sort " + SORT_SIZE + " items (ordered data). Time(ns)  ");
+        testedArray = AlgorithmsUtil.getOrdered(SORT_SIZE);
         testSorting();
 
-        System.out.println("------- finish -------");
+        System.out.println("------- finish sorting-------------------------------------\n");
+
+        System.out.print(" -------- Search Time(ns)  ");
+        testedItems = AlgorithmsUtil.getRandomItems(SEARCH_SIZE);
+        testSearch();
+
+        System.out.println("------- finish search--------------------------------------");
     }
 
     private static void testSorting() {
@@ -82,26 +96,26 @@ public final class MainAlgorithms {
 
         System.out.println();
 
-        Map<String, Long> avgResults = getAverageResults();
-        showResults(avgResults);
+        Map<String, Long> avgResults = AlgorithmsUtil.getAverageResults(testResults);
+        AlgorithmsUtil.showResults(avgResults);
     }
 
     private static void testSorter(Sorter sorter) {
         System.out.print("/");
-        String name = getName(sorter);
+        String name = AlgorithmsUtil.getName(sorter, MAX_NAME_LENGTH);
 
         List<Long> classResults = testResults.get(name);
         if (classResults == null) {
             classResults = new ArrayList<>();
             testResults.put(name, classResults);
         }
-        for (int i = 0; i <= SHOTS; i++) {
+        for (int i = 0; i <= SORT_SHOTS; i++) {
             System.out.print(".");
 
-            sorter.setValues(getFilledArray());
+            sorter.setValues(Arrays.copyOf(testedArray, testedArray.length));
 
             long time = sorter.sort();
-            checkOrderedValues(sorter.getValues());
+            AlgorithmsUtil.checkSortedValues(sorter.getValues());
 
             if (i > 0) {
                 testResults.get(name).add(time);
@@ -109,89 +123,44 @@ public final class MainAlgorithms {
         }
     }
 
-    private static int[] getFilledArray() {
-        return Arrays.copyOf(testedArray, testedArray.length);
+    private static void testSearch() {
+        testResults = new HashMap<>();
+
+        testSearcher(new LinearSearcher());
+        testSearcher(new BinarySearcher());
+        testSearcher(new IndexSearcher());
+
+        System.out.println();
+
+        Map<String, Long> avgResults = AlgorithmsUtil.getAverageResults(testResults);
+        AlgorithmsUtil.showResults(avgResults);
     }
 
-    private static void fillOrdered() {
-        testedArray = new int[SIZE];
-        for (int i = 0; i < SIZE; i++) {
-            testedArray[i] = i;
-        }
-    }
+    private static void testSearcher(Searcher searcher) {
+        System.out.print("/");
+        String name = AlgorithmsUtil.getName(searcher, MAX_NAME_LENGTH);
 
-    private static void fillPartlyOrdered() {
-        testedArray = new int[SIZE];
-        for (int i = 0; i < SIZE / 2; i++) {
-            testedArray[i] = i;
+        List<Long> classResults = testResults.get(name);
+        if (classResults == null) {
+            classResults = new ArrayList<>();
+            testResults.put(name, classResults);
         }
-        for (int i = SIZE / 2; i < SIZE; i++) {
-            testedArray[i] = random.nextInt(SIZE);
-        }
-    }
-
-    private static void fillRandom() {
-        testedArray = new int[SIZE];
-        for (int i = 0; i < SIZE; i++) {
-            testedArray[i] = random.nextInt(SIZE * 10);
-        }
-    }
-
-    private static Map<String, Long> getAverageResults() {
-        Map<String, Long> avgResults = new HashMap<>();
-
-        testResults.forEach((k, results) -> {
-            long tmp = 0;
-            for (long res : results) {
-                tmp += res;
+        for (int i = 0; i <= SEARCH_SHOTS; i++) {
+            if (i % (SEARCH_SHOTS / 5) == 0) {
+                System.out.print(".");
             }
-            tmp /= results.size();
-            avgResults.put(k, tmp);
-        });
 
-        return avgResults;
-    }
+            searcher.setItems(testedItems);
 
-    private static void showResults(Map<String, Long> results) {
-        List<Map.Entry<String, Long>> res = new ArrayList<>(results.entrySet());
-        res.sort(new Comparator<Map.Entry<String, Long>>() {
-            @Override
-            public int compare(Map.Entry<String, Long> o1, Map.Entry<String, Long> o2) {
-                long diff = o1.getValue() - o2.getValue();
-                return diff < 0 ? -1 : (diff > 0 ? 1 : 0);
+            int keyForSearch = testedItems[random.nextInt(testedItems.length)].getKey();
+            String result = searcher.get(keyForSearch);
+            assert String.valueOf(keyForSearch).equals(result);
+
+            long time = searcher.getLastSerchTime();
+
+            if (i > 0) {
+                testResults.get(name).add(time);
             }
-        });
-
-        long maxVal = res.get(res.size() - 1).getValue();
-
-        res.forEach(entry -> {
-            System.out.println(entry.getKey() + ": " + convertResult(entry.getValue(), maxVal));
-        });
-    }
-
-    private static String convertResult(long value, long max) {
-        String stringMax = String.valueOf(max);
-        String stringVal = String.valueOf(value);
-
-        int diff = stringMax.length() - stringVal.length();
-
-        if (diff > 0) {
-            stringVal = String.format("%0" + diff + "d", 0).replace('0', ' ') + stringVal;
-        }
-
-        return stringVal;
-    }
-
-    private static String getName(Sorter sorter) {
-        String name = sorter.getClass().getSimpleName();
-        int addLength = name.length() < MAX_NAME_LENGTH ? MAX_NAME_LENGTH - name.length() : 1;
-        String spaces = String.format("%0" + addLength + "d", 0).replace('0', ' ');
-        return name + spaces;
-    }
-
-    private static void checkOrderedValues(final int[] arr) {
-        for (int i = 1; i < arr.length; i++) {
-            assert arr[i - 1] <= arr[i] : "Not ordered!";
         }
     }
 
