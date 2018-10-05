@@ -1,6 +1,7 @@
 package com.sigmaukraine.aklymenko.bench;
 
 import com.sigmaukraine.aklymenko.bench.search.BinarySearcher;
+import com.sigmaukraine.aklymenko.bench.search.DSTreeSearcher;
 import com.sigmaukraine.aklymenko.bench.search.HashMapSearcher;
 import com.sigmaukraine.aklymenko.bench.search.IndexSearcher;
 import com.sigmaukraine.aklymenko.bench.search.Item;
@@ -131,7 +132,8 @@ public final class MainAlgorithms {
         testSearcher(new BinarySearcher());
         testSearcher(new IndexSearcher());
         testSearcher(new HashMapSearcher());
-        
+        testSearcher(new DSTreeSearcher());
+
         System.out.println();
 
         Map<String, Long> avgResults = AlgorithmsUtil.getAverageResults(testResults);

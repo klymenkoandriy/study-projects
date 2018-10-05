@@ -165,5 +165,14 @@ public final class AlgorithmsUtil {
         return stringVal;
     }
 
-
+    /**
+     * Returns <code>true</code> if the bit is set to a certain position.
+     * 
+     * @param value value
+     * @param position position
+     * @return <code>true</code> if the bit is set
+     */
+    public static boolean isBitSet(int value, int position) {
+        return ((1 << position) & value) != 0;
+    }
 }
