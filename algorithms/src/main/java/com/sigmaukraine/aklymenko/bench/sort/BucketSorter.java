@@ -10,13 +10,13 @@ import java.util.List;
 public class BucketSorter extends AbstractSorter implements Sorter {
 
     private static final int MASK_SIZE = 4;
-    private int mask = 1;
 
     private List<List<Integer>> buckets;
 
     @Override
     public void performSort() {
-        initialize();
+        buckets = new ArrayList<>();
+        buckets.add(new ArrayList<>());
 
         for (int value : values) {
             if (value < 0) {
@@ -59,13 +59,4 @@ public class BucketSorter extends AbstractSorter implements Sorter {
         }
     }
 
-    private void initialize() {
-        buckets = new ArrayList<>();
-
-        for (int i = 1; i < MASK_SIZE; i++) {
-            mask = (mask << 1) + 1;
-        }
-
-        buckets.add(new ArrayList<>());
-    }
 }
