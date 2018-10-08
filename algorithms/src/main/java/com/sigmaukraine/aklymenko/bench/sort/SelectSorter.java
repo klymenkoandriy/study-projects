@@ -16,9 +16,11 @@ public class SelectSorter extends AbstractSorter implements Sorter {
                 }
             }
 
-            tmp = values[i];
-            values[i] = values[least];
-            values[least] = tmp;
+            if (least != i) {
+                tmp = values[i];
+                values[i] = values[least];
+                values[least] = tmp;
+            }
         }
     }
 }
