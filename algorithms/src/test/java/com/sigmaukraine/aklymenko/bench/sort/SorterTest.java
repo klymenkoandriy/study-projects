@@ -72,6 +72,11 @@ public class SorterTest {
         testSorting(new HeapSorter());
     }
 
+    @Test
+    public void should_sort_correctly_counting_sorting() {
+        testSorting(new CountingSorter());
+    }
+
     private void testSorting(Sorter sorter) {
         sorter.setValues(values);
         sorter.sort();

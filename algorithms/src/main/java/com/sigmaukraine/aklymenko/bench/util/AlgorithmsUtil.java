@@ -69,6 +69,20 @@ public final class AlgorithmsUtil {
     }
 
     /**
+     * Returns array that filled with random data in specified range.
+     * 
+     * @param size size
+     * @return filled array
+     */
+    public static int[] getRandom(int size, int range) {
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = random.nextInt(range);
+        }
+        return array;
+    }
+
+    /**
      * Returns list of Items that filled with random unique data.
      * 
      * @param size size

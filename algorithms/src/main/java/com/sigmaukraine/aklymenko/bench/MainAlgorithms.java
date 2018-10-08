@@ -12,6 +12,7 @@ import com.sigmaukraine.aklymenko.bench.sort.BubbleSorter;
 import com.sigmaukraine.aklymenko.bench.sort.BucketSorter;
 import com.sigmaukraine.aklymenko.bench.sort.CocktailSorter;
 import com.sigmaukraine.aklymenko.bench.sort.CollectSorter;
+import com.sigmaukraine.aklymenko.bench.sort.CountingSorter;
 import com.sigmaukraine.aklymenko.bench.sort.HeapSorter;
 import com.sigmaukraine.aklymenko.bench.sort.InsertSorter;
 import com.sigmaukraine.aklymenko.bench.sort.MergeSorter;
@@ -40,6 +41,7 @@ public final class MainAlgorithms {
     private static final int SORT_SHOTS = 5;
     private static final int SEARCH_SIZE = 100_000;
     private static final int SEARCH_SHOTS = 20;
+    private static final int RANGE = 10;
 
     private static Random random = new Random();
 
@@ -61,6 +63,10 @@ public final class MainAlgorithms {
         testedArray = AlgorithmsUtil.getRandom(SORT_SIZE);
         testSorting();
 
+        System.out.print(" -------- Sort " + SORT_SIZE + " items (random data in gange 1.." + RANGE + "). Time(ns)  ");
+        testedArray = AlgorithmsUtil.getRandom(SORT_SIZE, RANGE);
+        testSorting();
+        
         System.out.print(" -------- Sort " + SORT_SIZE + " items (partly ordered data). Time(ns)  ");
         testedArray = AlgorithmsUtil.getPartlyOrdered(SORT_SIZE);
         testSorting();
@@ -95,6 +101,7 @@ public final class MainAlgorithms {
         testSorter(new CocktailSorter());
         testSorter(new BucketSorter());
         testSorter(new HeapSorter());
+        testSorter(new CountingSorter());
 
         System.out.println();
 
