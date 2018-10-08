@@ -77,6 +77,11 @@ public class SorterTest {
         testSorting(new CountingSorter());
     }
 
+    @Test
+    public void should_sort_correctly_tree_sorting() {
+        testSorting(new CountingSorter());
+    }
+
     private void testSorting(Sorter sorter) {
         sorter.setValues(values);
         sorter.sort();

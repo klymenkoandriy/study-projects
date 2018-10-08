@@ -22,6 +22,7 @@ import com.sigmaukraine.aklymenko.bench.sort.SelectSorter;
 import com.sigmaukraine.aklymenko.bench.sort.ShellSorter;
 import com.sigmaukraine.aklymenko.bench.sort.ShellSorterKhnut;
 import com.sigmaukraine.aklymenko.bench.sort.Sorter;
+import com.sigmaukraine.aklymenko.bench.sort.TreeSorter;
 import com.sigmaukraine.aklymenko.bench.util.AlgorithmsUtil;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public final class MainAlgorithms {
         System.out.print(" -------- Sort " + SORT_SIZE + " items (random data in gange 1.." + RANGE + "). Time(ns)  ");
         testedArray = AlgorithmsUtil.getRandom(SORT_SIZE, RANGE);
         testSorting();
-        
+
         System.out.print(" -------- Sort " + SORT_SIZE + " items (partly ordered data). Time(ns)  ");
         testedArray = AlgorithmsUtil.getPartlyOrdered(SORT_SIZE);
         testSorting();
@@ -85,7 +86,7 @@ public final class MainAlgorithms {
     }
 
     private static void testSorting() {
-
+        
         testResults = new HashMap<>();
 
         testSorter(new ArraysSorter());
@@ -102,6 +103,7 @@ public final class MainAlgorithms {
         testSorter(new BucketSorter());
         testSorter(new HeapSorter());
         testSorter(new CountingSorter());
+        testSorter(new TreeSorter());
 
         System.out.println();
 
