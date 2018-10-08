@@ -20,8 +20,7 @@ public abstract class AbstractSorter implements Sorter {
      * @param values values.
      */
     public AbstractSorter(int[] values) {
-        this.values = values;
-        this.size = values.length;
+        setValues(values);
     }
 
     /**
