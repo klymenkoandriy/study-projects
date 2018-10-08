@@ -71,6 +71,7 @@ public final class AlgorithmsUtil {
     /**
      * Returns array that filled with random data in specified range.
      * 
+     * @param range range
      * @param size size
      * @return filled array
      */
