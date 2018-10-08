@@ -6,10 +6,8 @@ package com.sigmaukraine.aklymenko.bench.sort;
 public class QuickSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long performSort() {
-        long start = System.nanoTime();
+    public void performSort() {
         quickSort(0, size - 1);
-        return System.nanoTime() - start;
     }
 
     private void quickSort(int leftIndex, int rightIndex) {

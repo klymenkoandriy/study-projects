@@ -6,11 +6,9 @@ package com.sigmaukraine.aklymenko.bench.sort;
 public class HeapSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long performSort() {
-        long startTime = System.nanoTime();
+    public void performSort() {
         buildHeap();
         sortHeap();
-        return System.nanoTime() - startTime;
     }
 
     private void buildHeap() {

@@ -57,14 +57,16 @@ public abstract class AbstractSorter implements Sorter {
         if (values == null) {
             throw new RuntimeException("Array is null!");
         }
-        return performSort();
+
+        long start = System.nanoTime();
+        performSort();
+
+        return System.nanoTime() - start;
     };
 
     /**
      * Performs sorting.
-     *
-     * @return time(ms)
      */
-    public abstract long performSort();
+    public abstract void performSort();
 
 }

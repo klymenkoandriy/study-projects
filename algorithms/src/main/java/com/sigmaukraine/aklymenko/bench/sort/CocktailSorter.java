@@ -6,8 +6,7 @@ package com.sigmaukraine.aklymenko.bench.sort;
 public class CocktailSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long performSort() {
-        long start = System.nanoTime();
+    public void performSort() {
         int tmp;
         int left = 0;
         int right = values.length - 1;
@@ -29,7 +28,5 @@ public class CocktailSorter extends AbstractSorter implements Sorter {
             }
             left++;
         } while (left < right);
-
-        return System.nanoTime() - start;
     }
 }

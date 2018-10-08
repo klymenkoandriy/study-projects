@@ -15,8 +15,7 @@ public class BucketSorter extends AbstractSorter implements Sorter {
     private List<List<Integer>> buckets;
 
     @Override
-    public long performSort() {
-        long start = System.nanoTime();
+    public void performSort() {
         initialize();
 
         for (int value : values) {
@@ -28,7 +27,6 @@ public class BucketSorter extends AbstractSorter implements Sorter {
 
         sortBuckets();
         fillByResults();
-        return System.nanoTime() - start;
     }
 
     private void fillByResults() {

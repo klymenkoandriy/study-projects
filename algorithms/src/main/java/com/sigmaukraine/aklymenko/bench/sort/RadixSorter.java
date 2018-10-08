@@ -13,8 +13,7 @@ public class RadixSorter extends AbstractSorter implements Sorter {
     private int maxSize;
 
     @Override
-    public long performSort() {
-        long start = System.nanoTime();
+    public void performSort() {
         //including first group
         convertInputValues();
 
@@ -25,8 +24,6 @@ public class RadixSorter extends AbstractSorter implements Sorter {
         }
 
         convertResult();
-
-        return System.nanoTime() - start;
     }
 
     private void groupByRadix(int i) {

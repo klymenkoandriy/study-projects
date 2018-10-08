@@ -8,9 +8,7 @@ import java.util.Arrays;
 public class ArraysSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long performSort() {
-        long start = System.nanoTime();
+    public void performSort() {
         Arrays.sort(values);
-        return System.nanoTime() - start;
     }
 }

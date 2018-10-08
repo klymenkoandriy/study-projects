@@ -10,17 +10,18 @@ import java.util.stream.Collectors;
  */
 public class CollectSorter extends AbstractSorter implements Sorter {
 
+    private List<Integer> listToSort;
+
     @Override
-    public long performSort() {
+    public void setValues(int[] values) {
+        super.setValues(values);
+        listToSort = Arrays.stream(values).boxed().collect(Collectors.toList());
+    }
 
-        List<Integer> list = Arrays.stream(values).boxed().collect(Collectors.toList());
-
-        long start = System.nanoTime();
-        Collections.sort(list);
-        long end = System.nanoTime();
-
-        values = list.stream().mapToInt(i -> i).toArray();
-        return end - start;
+    @Override
+    public void performSort() {
+        Collections.sort(listToSort);
+        values = listToSort.stream().mapToInt(i -> i).toArray();
     }
 
 }

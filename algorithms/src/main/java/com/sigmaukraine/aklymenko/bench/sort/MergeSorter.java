@@ -6,10 +6,8 @@ package com.sigmaukraine.aklymenko.bench.sort;
 public class MergeSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long performSort() {
-        long start = System.nanoTime();
+    public void performSort() {
         mergeSort(values, 0, size - 1);
-        return System.nanoTime() - start;
     }
 
     private static void mergeSort(int[] elements, int low, int high) {

@@ -23,9 +23,7 @@ public class ShellSorter extends AbstractSorter implements Sorter {
     }
 
     @Override
-    public long performSort() {
-        long start = System.nanoTime();
-
+    public void performSort() {
         int i;
         int j;
         int temp;
@@ -45,7 +43,5 @@ public class ShellSorter extends AbstractSorter implements Sorter {
             }
             nextStep();
         }
-
-        return System.nanoTime() - start;
     }
 }

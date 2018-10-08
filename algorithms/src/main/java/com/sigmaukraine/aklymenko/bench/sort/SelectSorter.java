@@ -6,9 +6,8 @@ package com.sigmaukraine.aklymenko.bench.sort;
 public class SelectSorter extends AbstractSorter implements Sorter {
 
     @Override
-    public long performSort() {
+    public void performSort() {
         int tmp = 0;
-        long start = System.nanoTime();
         for (int i = 0; i < size; i++) {
             int least = i;
             for (int j = i + 1; j < size; j++) {
@@ -21,7 +20,5 @@ public class SelectSorter extends AbstractSorter implements Sorter {
             values[i] = values[least];
             values[least] = tmp;
         }
-
-        return System.nanoTime() - start;
     }
 }
